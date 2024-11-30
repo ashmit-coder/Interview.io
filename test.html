@@ -1,0 +1,154 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Assistant UI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Custom animation for the speech bubble */
+    @keyframes typing {
+      0% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+
+      50% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+    }
+  </style>
+</head>
+<!-- https://developer.chrome.com/blog/voice-driven-web-apps-introduction-to-the-web-speech-api -->
+
+<body>
+
+  <body class="flex items-center justify-center h-screen bg-gray-500">
+
+    <!-- Main Container -->
+    <div class="bg-black shadow-xl rounded-2xl p-6 w-80 space-y-4">
+      <!-- Header Section with Logo -->
+      <div class="text-center">
+        <h1 class="text-2xl font-semibold text-white mt-2">Voice Assistant</h1>
+      </div>
+
+      <!-- Voice Assistant Bubble -->
+      <div class="flex items-center justify-center">
+        <div id="assistant-bubble"
+          class="hidden bg-white text-black p-3 rounded-2xl inline-block animate-pulse shadow-md"
+          style="animation: typing 1s infinite;">
+          <span id="assistant-text">Listening...</span>
+        </div>
+      </div>
+
+      <!-- Start Button -->
+      <div class="flex justify-center">
+        <button id="start"
+          class="disabled:bg-gray-400 disabled:cursor-not-allowed bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-full shadow-md transition duration-300 focus:outline-none">
+          Start
+        </button>
+      </div>
+    </div>
+  </body>
+  <script>
+
+    // Setup UI elements
+    const assistantBubble = document.getElementById('assistant-bubble');
+    const assistantText = document.getElementById('assistant-text');
+    const startButton = document.getElementById('start');
+    const showListening = () => {
+      assistantBubble.classList.remove('hidden');
+      assistantText.textContent = 'Listening...';
+    }
+
+    const showThinking = () => {
+      assistantBubble.classList.remove('hidden');
+      assistantText.textContent = 'Thinking...';
+    }
+
+    const hideBubble = () => {
+      assistantBubble.classList.add('hidden');
+      assistantText.textContent = '';
+    }
+
+    /**
+     * Converts text to speech using the browser's built-in speech synthesis.
+     *
+     * @param {string} text - The text to be converted to speech.
+     */
+    function textToSpeech(text) {
+      const utterance = new window.SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    }
+
+    /**
+     * Returns a SpeechRecognition object for speech-to-text conversion using the browser's built-in Web Speech API.
+     * @returns {SpeechRecognition} The initialized SpeechRecognition object.
+     */
+    function getSpeechToText() {
+      const SpeechRecognition = window.webkitSpeechRecognition;
+
+      // Initalizing the speech recognition
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      return recognition;
+    }
+
+    const app = async function () {
+
+      const recognition = getSpeechToText();
+
+      startButton.onclick = function () {
+        // Start the speech recognition
+        startButton.disabled = true;
+        recognition.start();
+        // Show the listening bubble
+        showListening();
+        console.log('Listening...')
+      }
+
+      // Handle the result of the speech recognition
+      // This is called after user stops speaking
+      recognition.onresult = async function (event) {
+        // get transcript from the event
+        const text = event.results[0][0].transcript;
+        // show "Thinking..." bubble
+        showThinking();
+        console.log('Thinking...')
+        // Send users query to the assistant
+        // const result = await session.prompt(text);
+        // Hide the bubble
+        hideBubble();
+        console.log('Speaking...')
+        // Speak the result
+        textToSpeech(text)
+        startButton.disabled = false;
+      }
+
+      recognition.onspeechstart = function () {
+        console.log('Speech has been detected');
+      }
+
+      recognition.onspeechend = function () {
+        console.log('Speech has stopped being detected');
+        recognition.stop();
+      }
+
+      recognition.onerror = function (event) {
+        console.error('Error occurred in recognition: ' + event.error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', app);
+  </script>
+
+</html>
