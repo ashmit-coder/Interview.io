@@ -1,34 +1,150 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Interview.io
 
-First, run the development server:
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)  
+**Interview.io** is a Generative AI-powered interview platform designed to redefine how interviews are conducted. With adaptive question generation, real-time interaction tools, and advanced analytics, it offers an intelligent, personalized, and efficient interviewing experience for candidates and recruiters alike.
 
+
+
+## 🚀 Features
+
+- **Generative AI Questioning**  
+  Dynamically generates tailored questions based on the candidate's background and real-time responses.
+
+- **Live Video & Audio**  
+  Seamless video streaming with easy-to-use controls for toggling camera and microphone.
+
+- **Speech Recognition & Transcription**  
+  Captures candidate responses in real time for review and analysis.
+
+- **Stage-Based Interview Progression**  
+  Visual progress tracking for structured and clear interview sessions.
+
+- **Customizable Interface**  
+  Light and dark mode support for an accessible and user-friendly experience.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React.js, TypeScript, Next.js, Tailwind CSS  
+- **Backend**: Flask, Python  
+- **APIs**: Custom AI Question Generation API  
+- **Speech & Video**: WebRTC, Web Speech API  
+- **Deployment**: Docker, GCP
+
+---
+
+## 📦 Installation
+
+### Prerequisites
+- Node.js (v16 or higher)
+- Python (v3.8 or higher)
+- Docker (optional for containerized deployment)
+
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/Interview.io.git
+   cd Interview.io
+   ```
+
+2. Install frontend dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+3. Install backend dependencies:
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   ```
+
+4. Start the backend server:
+   ```bash
+   python app.py
+   ```
+
+5. Start the frontend:
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+6. Access the app at [http://localhost:3000](http://localhost:3000).
+
+---
+
+## 🤖 Generative AI API
+
+The project utilizes a custom Flask API for question generation.  
+### API Endpoint:  
+**POST** `/api/generate-questions`  
+- **Input**: Candidate introduction  
+- **Output**: List of AI-generated interview questions  
+
+Example cURL Request:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+curl -X POST http://127.0.0.1:5000/api/generate-questions \
+-H "Content-Type: application/json" \
+-d '{
+  "intro": "I have experience in Python programming, data analysis, and machine learning."
+}'
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📐 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+Interview.io/
+├── frontend/           # Next.js frontend code
+├── backend/            # Flask backend code
+├── api/                # Generative AI API scripts
+├── assets/             # Static assets (images, icons)
+├── README.md           # Project documentation
+├── LICENSE             # License file
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🌟 Features in Progress
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Advanced AI analytics for candidate evaluation.  
+- Integration with third-party recruitment tools.  
+- Comprehensive interview summaries and reporting.  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🧑‍💻 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We welcome contributions to enhance **Interview.io**!  
+1. Fork the repository.  
+2. Create a new branch for your feature or bug fix:  
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes and push to the branch:  
+   ```bash
+   git push origin feature-name
+   ```
+4. Open a Pull Request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 📞 Contact
+
+For questions or support, reach out to:  
+- **Ashmit Jagtap**  
+  [GitHub](https://github.com/ashmit-coder) | [LinkedIn](https://linkedin.com/in/ashmit-jagtap)
+
+---
+
+ **Empower smarter hiring with Interview.io!**
